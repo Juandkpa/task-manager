@@ -107,10 +107,8 @@ router.delete('/users/me/avatar', auth, async(req, res) => {
 });
 
 router.get('/users/:id/avatar', async (req, res) => {
-    console.log("what");
     try {
         const user = await User.findById(req.params.id);
-        console.log("user.name", user.name);
         if (!user || !user.avatar) {
             throw new Error();
         }

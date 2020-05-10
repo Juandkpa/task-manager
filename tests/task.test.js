@@ -1,7 +1,7 @@
 const request = require('supertest');
 const app = require('../src/app');
 const Task = require('../src/models/task');
-const { userOneId, userOne, setupDataBase, taskThree} = require('./fixtures/db');
+const { userOneId, userOne, setupDataBase, closeDataBase, taskThree} = require('./fixtures/db');
 
 //links.mead.io/extratests
 
@@ -32,10 +32,13 @@ test('Should get correct user tasks', async () => {
 });
 
 test('Should not delete task from another user', async () => {
-    await request(app)
+   await request(app)
             .delete(`/tasks(${taskThree._id}`)
             .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+            .send()
             .expect(404)
-    const task = Task.findById(taskThree._id);
+    const task = await Task.findById(taskThree._id);
     expect(task).not.toBeNull();
 });
+
+afterAll(closeDataBase);

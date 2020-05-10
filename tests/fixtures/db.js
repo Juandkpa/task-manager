@@ -56,9 +56,18 @@ const setupDataBase = async () => {
     await new Task(taskThree).save();
 };
 
+const closeDataBase = async (done) => {
+
+    mongoose.connection.close();
+    done();
+
+}
+
 module.exports = {
     userOneId,
     userOne,
     taskThree,
-    setupDataBase
+    setupDataBase,
+
+    closeDataBase
 }

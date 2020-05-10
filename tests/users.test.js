@@ -1,7 +1,7 @@
 const request = require('supertest');
 const app = require('../src/app');
 const User = require('../src/models/user');
-const { userOneId, userOne, setupDataBase} = require('./fixtures/db');
+const { userOneId, userOne, setupDataBase, closeDataBase} = require('./fixtures/db');
 
 const sendPostRequest = (url, data) => {
     return request(app).post(url).send(data);
@@ -110,4 +110,6 @@ test('Should not update invalid user fields', async() => {
             'location': 'here'
         })
         .expect(400);
+
 })
+afterAll(closeDataBase);
