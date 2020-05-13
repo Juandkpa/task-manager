@@ -56,10 +56,9 @@ const setupDataBase = async () => {
     await new Task(taskThree).save();
 };
 
-const closeDataBase = async (done) => {
+const closeDataBase = async () => {
 
-    mongoose.connection.close();
-    done();
+    await mongoose.connection.close();
 
 }
 
